@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex">
-<title>ヒアリングロボット | Mitta Lab.</title>
+<title>ヒアリングツール | Mitta Lab.</title>
 <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
   * {
@@ -25,7 +25,7 @@
   }
   header {
     text-align: center;
-    margin-bottom: 28px;
+    margin-bottom: 20px;
   }
   .brand {
     font-size: 12px;
@@ -43,6 +43,30 @@
     font-size: 14px;
     color: #7a7268;
   }
+  .tabs {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .tab-btn {
+    font-family: 'Zen Kaku Gothic New', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    padding: 10px 26px;
+    border: 1px solid #d8cfc0;
+    border-radius: 999px;
+    background: #ffffff;
+    color: #7a7268;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .tab-btn.active {
+    background: #3d3833;
+    border-color: #3d3833;
+    color: #ffffff;
+  }
   .chat-frame {
     background: #ffffff;
     border: 1px solid #e8e2d8;
@@ -56,6 +80,9 @@
     min-height: 700px;
     border: none;
     border-radius: 8px;
+  }
+  .hidden {
+    display: none;
   }
   footer {
     text-align: center;
@@ -72,15 +99,39 @@
 <div class="container">
   <header>
     <p class="brand">Mitta Lab.</p>
-    <h1>ヒアリングロボット</h1>
-    <p class="lead">Webサイト制作のご希望を、チャットでおうかがいします。</p>
+    <h1>ヒアリングツール</h1>
+    <p class="lead" id="lead-text">Webサイト制作のご希望を、チャットでおうかがいします。</p>
   </header>
-  <div class="chat-frame">
+
+  <div class="tabs">
+    <button type="button" class="tab-btn active" id="btn-chatflow" onclick="showTab('chatflow')">チャットフロー</button>
+    <button type="button" class="tab-btn" id="btn-voice" onclick="showTab('voice')">ボイスヒアリング</button>
+  </div>
+
+  <div class="chat-frame" id="frame-chatflow">
     <iframe src="https://udify.app/chatbot/Y59IUHzN9EbEmj76" style="width: 100%; height: 100%; min-height: 700px;" frameborder="0" allow="microphone"></iframe>
   </div>
+
+  <div class="chat-frame hidden" id="frame-voice">
+    <iframe src="https://udify.app/chatbot/9lPtPaspNlbn6BjJ" style="width: 100%; height: 100%; min-height: 700px;" frameborder="0" allow="microphone"></iframe>
+  </div>
+
   <footer>
-    <p class="memo">※自分用メモ：打ち合わせ中にお客様と画面共有して使う道具</p>
+    <p class="memo">※自分用メモ:チャットフロー=お客様と画面共有して使う / ボイスヒアリング=手元で番号を手入力+内容を音声で吹き込む</p>
   </footer>
 </div>
+
+<script>
+  function showTab(name) {
+    var isVoice = (name === 'voice');
+    document.getElementById('frame-chatflow').classList.toggle('hidden', isVoice);
+    document.getElementById('frame-voice').classList.toggle('hidden', !isVoice);
+    document.getElementById('btn-chatflow').classList.toggle('active', !isVoice);
+    document.getElementById('btn-voice').classList.toggle('active', isVoice);
+    document.getElementById('lead-text').textContent = isVoice
+      ? '番号は手入力、内容は音声でおうかがいします。'
+      : 'Webサイト制作のご希望を、チャットでおうかがいします。';
+  }
+</script>
 </body>
 </html>
